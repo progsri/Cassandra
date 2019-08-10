@@ -151,7 +151,7 @@ public class CassandraDaemon
         }
     }
 
-    static final CassandraDaemon instance = new CassandraDaemon();
+    static final CassandraDaemon instance = new CassandraDaemon(); // put this is metaspace as this object is always required, no need to garbage collect.
 
     private NativeTransportService nativeTransportService;
     private JMXConnectorServer jmxServer;
@@ -163,11 +163,14 @@ public class CassandraDaemon
     public CassandraDaemon()
     {
         this(false);
+        logger.info("CassandraDaemon object created"); // inside the constructor method has access to static fields/methods
     }
 
     public CassandraDaemon(boolean runManaged)
     {
         this.runManaged = runManaged;
+
+        //StartupChecks.check();
         this.startupChecks = new StartupChecks().withDefaultTests();
         this.setupCompleted = false;
     }
