@@ -82,7 +82,7 @@ public class CassandraDaemon
     public static final String MBEAN_NAME = "org.apache.cassandra.db:type=NativeAccess";
 
     private static final Logger logger;
-    static
+    static //BKLG understanding static block
     {
         // Need to register metrics before instrumented appender is created(first access to LoggerFactory).
         SharedMetricRegistries.getOrCreate("logback-metrics").addListener(new MetricRegistryListener.Base()
@@ -151,7 +151,7 @@ public class CassandraDaemon
         }
     }
 
-    static final CassandraDaemon instance = new CassandraDaemon(); // put this is metaspace as this object is always required, no need to garbage collect.
+    static final CassandraDaemon instance = new CassandraDaemon(); //OBS pus this is metaspace as this object is always required, no need to garbage collect.
 
     private NativeTransportService nativeTransportService;
     private JMXConnectorServer jmxServer;
@@ -163,7 +163,7 @@ public class CassandraDaemon
     public CassandraDaemon()
     {
         this(false);
-        logger.info("CassandraDaemon object created"); // inside the constructor method has access to static fields/methods
+        logger.info("CassandraDaemon object created"); //OBS inside the constructor method has access to static fields/methods
     }
 
     public CassandraDaemon(boolean runManaged)
